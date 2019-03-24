@@ -1,0 +1,56 @@
+nav {
+    background: #76323f;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+li.activated {
+    background-color: #00a8ff;
+}
+a {
+    color: #fff;
+    padding: 23px;
+    display: block;
+}
+
+li:not(.exclude):hover {
+    background-color: darkgray;
+}
+
+img{
+    max-width: 60px;
+    padding-top: 15px;
+}
+
+@media screen and (max-width: 600px) {   
+    nav {
+        background: #2D2E2E;
+        height: 100%;
+        max-width: 40px;
+        position: fixed;
+        z-index: 1;
+    }
+    .material-icons{
+        max-width: 28px;
+    }
+    a {
+        color: #fff;
+        padding-bottom: 23px;
+        padding-left: 9px;
+
+        display: block;
+    }
+    
+    img{
+        max-width: 40px;
+        padding-top: 10px;
+        padding-left: 5px;
+    }
+    
+}
