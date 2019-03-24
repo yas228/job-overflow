@@ -13,9 +13,7 @@ var jobRoutes = require("./routes/jobs"),
     indexRoutes      = require("./routes/index");
    
 //connecting to DB on atlas
-const uri = "mongodb+srv://heroku:heroku@yelp-camp-vtabt.mongodb.net/yelp-camp?retryWrites=true";
-
-mongoose.connect(uri, {
+mongoose.connect(process.env.MONGODB_URI, {
         useNewUrlParser: true,
         useCreateIndex: true
     })
@@ -28,11 +26,10 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
-// seedDB(); //seed the database
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
-    secret: "Once again Rusty wins cutest dog!",
+    secret: "CS Games is not a joke, Kis!",
     resave: false,
     saveUninitialized: false
 }));

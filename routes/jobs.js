@@ -11,7 +11,7 @@ router.get("/", function(req, res){
        if(err){
            console.log(err);
        } else {
-          res.render("jobs/index",{jobs:allJobs});
+          res.json({"jobs":allJobs});
        }
     });
 });
@@ -19,15 +19,18 @@ router.get("/", function(req, res){
 //CREATE - add new job to DB
 router.post("/", middleware.isLoggedIn, function(req, res){
     // get data from form and add to jobs array
-    var name = req.body.name;
-    var price = req.body.price;
-    var image = req.body.image;
-    var desc = req.body.description;
-    var author = {
-        id: req.user._id,
-        username: req.user.username
+    var newJob = {
+        "description_en": req.user.description_en,
+        "description_fr": req.user.description_fr,
+        "salary": req.user.salary,
+        "work_location": req.user.work_location,
+        "work_universe": req.user.work_universe,
+        "required_skill": req.user.required_skill,
+        "date_posted": Date.now, 
+        "education_level": req.user.education_level,
+        "author": req.user._id
     }
-    var newJob = {name: name, price: price, image: image, description: desc, author:author}
+    
     // Create a new job and save to DB
     Job.create(newJob, function(err, newlyCreated){
         if(err){
@@ -40,21 +43,17 @@ router.post("/", middleware.isLoggedIn, function(req, res){
     });
 });
 
-//NEW - show form to create new job
-router.get("/new", middleware.isLoggedIn, function(req, res){
-   res.render("jobs/new"); 
-});
 
 // SHOW - shows more info about one job
 router.get("/:id", function(req, res){
     //find the job with provided ID
-    Job.findById(req.params.id).populate("comments").exec(function(err, foundJob){
+    Job.findById(req.params.id, function(err, foundJob){
         if(err){
             console.log(err);
         } else {
             console.log(foundJob)
             //render show template with that job
-            res.render("jobs/show", {job: foundJob});
+            res.json({"jobs" : foundJob});
         }
     });
 });
@@ -83,9 +82,9 @@ router.put("/:id",middleware.checkJobOwnership, function(req, res){
 router.delete("/:id",middleware.checkJobOwnership, function(req, res){
    Job.findByIdAndRemove(req.params.id, function(err){
       if(err){
-          res.redirect("/jobs");
+          res.status(400).send("Error");
       } else {
-          res.redirect("/jobs");
+          res.status(200).send("Success");
       }
    });
 });
