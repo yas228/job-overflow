@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - "8"
+  
+env:
+  - CODECOV_TOKEN=6a7f06bb-9348-4902-828b-1e44ca9b783f
+script:
+- npm run test
+- npm run report-coverage
